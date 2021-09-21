@@ -136,8 +136,4 @@ public class ProductsDao implements ProductsDaoInterface {
 			e.printStackTrace();
 		}		
 	}
-
-
-
-
 }

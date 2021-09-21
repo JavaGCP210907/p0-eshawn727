@@ -3,6 +3,9 @@ package com.revature.models;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.revature.dao.CustomersDao;
 import com.revature.dao.OrdersDao;
 import com.revature.dao.ProductsDao;
@@ -22,6 +25,7 @@ public class CLI_Menu {
 	 * 
 	 * 
 	 */
+	Logger log = LogManager.getLogger(CLI_Menu.class);
 	
 	public void runCLI() {
 		
@@ -65,6 +69,7 @@ public class CLI_Menu {
 				for(Customers cust: custList) {
 					System.out.println(cust);
 				}
+				log.info("Customers table accessed");
 				break;
 			}
 			case "products": {
