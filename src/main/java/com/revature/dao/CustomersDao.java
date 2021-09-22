@@ -16,7 +16,7 @@ public class CustomersDao implements CustomersDaoInterface {
 	@Override
 	public List<Customers> getCustomers() {
 		
-		// Open connection to database
+		// Open connection to database and use list to store database records
 		try(Connection db_link = ConnectionUtil.getConnection()){
 			
 			ResultSet rs = null;
@@ -48,7 +48,7 @@ public class CustomersDao implements CustomersDaoInterface {
 
 	@Override
 	public List<Customers> getCustomersById(int id) {
-		// TODO Auto-generated method stub
+		// search for customer by id number
 		try(Connection db_link = ConnectionUtil.getConnection()){
 			
 			ResultSet rs = null;
@@ -69,14 +69,13 @@ public class CustomersDao implements CustomersDaoInterface {
 			System.out.println("Error...db connection/CustomersDao/getCustomerById");
 			e.printStackTrace();
 		}
-		
-		
+				
 		return null;
 	}
 
 	@Override
 	public void addCustomer(Customers customer) {
-		// TODO Auto-generated method stub
+		// add customer to customers table
 		try(Connection db_link = ConnectionUtil.getConnection()){
 			String sql = "insert into customers (f_name, l_name) values (?, ?)";			
 			PreparedStatement ps = db_link.prepareStatement(sql);
@@ -95,7 +94,7 @@ public class CustomersDao implements CustomersDaoInterface {
 
 	@Override
 	public void deleteCustomer(int num) {
-		// TODO Auto-generated method stub
+		// remove a customer from table
 		try(Connection db_link = ConnectionUtil.getConnection()){
 			String sql = "delete from customers where cust_num = ?";
 			PreparedStatement ps = db_link.prepareStatement(sql);
@@ -112,7 +111,7 @@ public class CustomersDao implements CustomersDaoInterface {
 
 	@Override
 	public void updateCustLName(int num, String l_name) {
-		// TODO Auto-generated method stub
+		// update a customers last name
 		try(Connection db_link = ConnectionUtil.getConnection()){
 			String sql = "update customers set l_name = ? where cust_num = ?";
 			PreparedStatement ps = db_link.prepareStatement(sql);

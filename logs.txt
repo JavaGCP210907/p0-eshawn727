@@ -1,0 +1,16 @@
+2021-09-21 20:03:49 INFO  CLI_Menu:73 - Customers table accessed
+2021-09-21 20:46:51 INFO  CLI_Menu:67 - Customers table accessed/viewed
+2021-09-21 20:47:06 INFO  CLI_Menu:76 - Products table accessed/viewed
+2021-09-21 20:47:34 INFO  CLI_Menu:85 - Orders table accessed/viewed
+2021-09-21 21:44:03 INFO  GUI:169 - Customer Updated from GUI
+2021-09-21 21:47:55 INFO  GUI:236 - Gross Sales Calculated from GUI
+2021-09-21 21:48:00 INFO  GUI:244 - Gross Profits Calculated from GUI
+2021-09-21 21:48:48 INFO  GUI:184 - Product Tonka from GUI
+2021-09-21 21:49:23 INFO  GUI:184 - Product Tonka from GUI
+2021-09-21 21:49:52 WARN  GUI:194 - Product number 10 has been deleted from GUI
+2021-09-21 21:50:11 INFO  GUI:169 - Customer Updated from GUI
+2021-09-21 21:51:33 INFO  GUI:152 - Application Closed By User
+2021-09-21 21:52:18 INFO  GUI:144 - GUI Initialized
+2021-09-21 21:52:59 INFO  GUI:246 - Gross Profits Calculated from GUI
+2021-09-21 21:53:14 INFO  GUI:238 - Gross Sales Calculated from GUI
+2021-09-21 21:53:19 INFO  GUI:153 - Application Closed By User

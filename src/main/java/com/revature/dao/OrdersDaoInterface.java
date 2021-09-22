@@ -10,6 +10,8 @@ public interface OrdersDaoInterface {
 	
 	public List<Orders> getOrderByNum(int num);
 	
-	public String showMoney();
+	public double showMoney();
+	
+	public double calcProfit();
 
 }

@@ -15,7 +15,7 @@ public class ProductsDao implements ProductsDaoInterface {
 
 	@Override
 	public List<Products> getProducts() {
-		
+		// store database records in list
 		try(Connection db_link = ConnectionUtil.getConnection()){
 			
 			ResultSet rs = null;
@@ -49,7 +49,7 @@ public class ProductsDao implements ProductsDaoInterface {
 
 	@Override
 	public List<Products> getProductByPrice(double price) {
-		// TODO Auto-generated method stub
+		// search products table by sale price
 		try(Connection db_link = ConnectionUtil.getConnection()){
 			
 			ResultSet rs = null;
@@ -83,7 +83,7 @@ public class ProductsDao implements ProductsDaoInterface {
 
 	@Override
 	public void addProduct(Products product) {
-		// TODO Auto-generated method stub
+		// add a product to products table
 		try(Connection db_link = ConnectionUtil.getConnection()){
 			String sql = "insert into products (prod_name, prod_type, prod_production_cost, prod_sale_price) "
 					     + "values (?, ?, ?, ?)";			
@@ -105,7 +105,7 @@ public class ProductsDao implements ProductsDaoInterface {
 
 	@Override
 	public void deleteProduct(int id) {
-		// TODO Auto-generated method stub
+		// remove a product from products table
 		try(Connection db_link = ConnectionUtil.getConnection()){
 			String sql = "delete from products where prod_id = ?";
 			PreparedStatement ps = db_link.prepareStatement(sql);
@@ -121,7 +121,7 @@ public class ProductsDao implements ProductsDaoInterface {
 
 	@Override
 	public void updateProdSalePrice(int id, double price) {
-		//
+		// update a products sale price
 		try(Connection db_link = ConnectionUtil.getConnection()){
 			
 			String sql = "update products set prod_sale_price = ? where prod_id = ?";

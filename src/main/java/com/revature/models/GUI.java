@@ -20,6 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.revature.dao.CustomersDao;
 import com.revature.dao.OrdersDao;
 import com.revature.dao.ProductsDao;
@@ -48,6 +52,8 @@ public class GUI implements ActionListener {
 	JPanel epanel = new JPanel();
 	JPanel cpanel = new JPanel();
 	JPanel tblPanel = new JPanel();
+	
+	Logger guiLog = LogManager.getLogger(GUI.class);
 	
 	public GUI() {
 		buildGUI();
@@ -105,7 +111,7 @@ public class GUI implements ActionListener {
 		buttonPanel.add(deleteB);
 		
 		// create combobox for calculations
-		String[] options = {"Gross Sales", "Gross Profit Margin", "Product Net Profit"};
+		String[] options = {"Gross Sales", "Gross Profit"};
 		optionBox = new JComboBox(options);
 		optionBox.addActionListener((e) -> {optionBoxAction(e);});
 		buttonPanel.add(optionBox);
@@ -135,6 +141,7 @@ public class GUI implements ActionListener {
 		tblPanel.add(logo2);
 		// make application visible
 		baseFrame.setVisible(true);	
+		guiLog.info("GUI Initialized");
 	}
 	
 	// event handler to build proper panel to get user input
@@ -143,6 +150,7 @@ public class GUI implements ActionListener {
 		//button logic builds a panel in center for user input
 		if (e.getSource() == exitB){
 			baseFrame.setVisible(false);
+			guiLog.info("Application Closed By User");
 		} else if (e.getSource() == updateCustB) {
 			buildCustPanel();
 		} else if (e.getSource() == addProdB) {
@@ -160,6 +168,7 @@ public class GUI implements ActionListener {
 		int custNum = Integer.parseInt(num);
 		String lName = addTxt2.getText();
 		custDao.updateCustLName(custNum, lName);
+		guiLog.info("Customer Updated from GUI");
 	}
 	
 	// event handler for add product button
@@ -174,6 +183,7 @@ public class GUI implements ActionListener {
 		double prodPrice = Double.parseDouble(num2);		
 		Products prod = new Products(prodName, prodType, prodCost, prodPrice);
 		prodDao.addProduct(prod);		
+		guiLog.info("Product " + prodName + " has been added from GUI");
 	}
 
 	// event handler for delete product button
@@ -183,6 +193,7 @@ public class GUI implements ActionListener {
 		String num = addTxt1.getText();
 		int prodId = Integer.parseInt(num);
 		prodDao.deleteProduct(prodId);		
+		guiLog.warn("Product number " + prodId + " has been deleted from GUI");
 	}
 	
 	// event handler for table selection
@@ -221,16 +232,19 @@ public class GUI implements ActionListener {
 			if(optionBox.getSelectedItem() == "Gross Sales") {
 				// access dao layer and use method to calculate gross sales from orders table
 				OrdersDao ordDao = new OrdersDao();
-				String gross = ordDao.showMoney();
-				JOptionPane.showMessageDialog(null, gross);
+				double gross = ordDao.showMoney();
+				String grossSales = "First Quarter Sales are: $" + gross;
+				JOptionPane.showMessageDialog(null, grossSales);
+				guiLog.info("Gross Sales Calculated from GUI");
 				
-			} else if(optionBox.getSelectedItem() == "Gross Profit Margin") {
-				//
-				System.out.println("gross profit");
-			} else if(optionBox.getSelectedItem() == "Product Net Profit") {
-				//
-				System.out.println("net product profit");
-			}	
+			} else if(optionBox.getSelectedItem() == "Gross Profit") {
+				// access dao layer and use method to calculate gross profit from orders table
+				OrdersDao ordDao = new OrdersDao();
+				double profit = ordDao.calcProfit();
+				String grossProfit = "Gross Profits are: $" + profit;
+				JOptionPane.showMessageDialog(null, grossProfit);
+				guiLog.info("Gross Profits Calculated from GUI");
+			} 
 		}		
 	}
 	

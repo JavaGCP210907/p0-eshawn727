@@ -13,10 +13,18 @@ public class ConnectionUtil {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace(); 
 		}
+		
+		/*
+		String url = "jdbc:postgresql://localhost:5432/postgres?currentSchema=projectdb";
+		String username = "postgres";
+		String password = "password";
+		*/
 	
+		// use environment variables to protect sensitive credentials to access database
 		String url = System.getenv("URL");
 		String username = System.getenv("USERNAME");
 		String password = System.getenv("PASSWORD");
+	
 		
 		//this return statement is what returns the actual database Connection object
 		return DriverManager.getConnection(url, username, password);		

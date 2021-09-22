@@ -12,21 +12,20 @@ import com.revature.dao.ProductsDao;
 
 public class CLI_Menu {
 	
+	// create dao objects to access database
 	CustomersDao custDao =  new CustomersDao();
 	ProductsDao prodDao = new ProductsDao();
 	OrdersDao ordDao = new OrdersDao();
 	String input;
+	
+	// use lists to hold the data from database
 	List<Customers> custList;
 	List<Products> prodList;
 	List<Orders> ordList;
 	
-	/* ADD LOGGER
-	 * 
-	 * 
-	 * 
-	 */
+	// create object for logging purposes
 	Logger log = LogManager.getLogger(CLI_Menu.class);
-	
+		
 	public void runCLI() {
 		
 		boolean runMenu = true;
@@ -34,34 +33,39 @@ public class CLI_Menu {
 		Scanner scan = new Scanner(System.in);
 		
 		// Greeting
-		System.out.println("--------------------------------");
-		System.out.println("|WELCOME TO PEGASUS ENTERPRISES|");
-		System.out.println("--------------------------------");
+		System.out.println("|---------------------------------------|");
+		System.out.println("|     WELCOME TO PEGASUS ENTERPRISES    |");
+		System.out.println("|---------------------------------------|");
 		System.out.println();
 		
 		while(runMenu) {
 			
-	
-			System.out.println("|----------ENTER AN OPTION--------------|");
+			// build a menu for selections
+			System.out.println("|-----------ENTER AN OPTION-------------|");
 			System.out.println("|                                       |");
 			System.out.println("|Show Customers Table:         customers|");
 			System.out.println("|---------------------------------------|");
 			System.out.println("|Show Products Table:           products|");
 			System.out.println("|---------------------------------------|");
 			System.out.println("|Show Orders Table:               orders|");
+			System.out.println("|---------------------------------------|");
 			System.out.println("|Search Customers by number:     custNum|");
+			System.out.println("|---------------------------------------|");
 			System.out.println("|Search Products by Price:      findProd|");
+			System.out.println("|---------------------------------------|");
 			System.out.println("|Add Customer:                   addCust|");
+			System.out.println("|---------------------------------------|");
 			System.out.println("|Update Product Sale Price: updateProdPr|");
+			System.out.println("|---------------------------------------|");
 			System.out.println("|Delete Product:              deleteProd|");
+			System.out.println("|---------------------------------------|");
 			System.out.println("|Calculate Gross Sales:            gross|");
-			//System.out.println("|Calculate Product Net Profit: profit   |");
-			//System.out.println("|Calculate Gross Profit Margin: margin  |");
+			System.out.println("|---------------------------------------|");
 			System.out.println("|Exit:                              exit|");
 			System.out.println("|---------------------------------------|");
 			input = scan.nextLine();
 			
-			
+			// handle user selections 
 			switch (input) {
 			
 			case "customers": {
@@ -69,7 +73,8 @@ public class CLI_Menu {
 				for(Customers cust: custList) {
 					System.out.println(cust);
 				}
-				log.info("Customers table accessed");
+				log.info("Customers table accessed/viewed");
+				System.out.println();
 				break;
 			}
 			case "products": {
@@ -77,6 +82,8 @@ public class CLI_Menu {
 				for(Products prod: prodList) {
 					System.out.println(prod);
 				}
+				log.info("Products table accessed/viewed");
+				System.out.println();
 				break;
 			}
 			case "orders": {
@@ -84,6 +91,8 @@ public class CLI_Menu {
 				for(Orders ord: ordList) {
 					System.out.println(ord);
 				}
+				log.info("Orders table accessed/viewed");
+				System.out.println();
 				break;
 			}
 			case "custNum": {
@@ -94,6 +103,7 @@ public class CLI_Menu {
 				for(Customers cust: custList) {
 					System.out.println(cust);
 				}
+				System.out.println();
 				break;
 			}
 			case "findProd": {
@@ -104,6 +114,7 @@ public class CLI_Menu {
 				for(Products prod: prodList) {
 					System.out.println(prod);
 				}
+				System.out.println();
 				break;
 			}
 			case "addCust":	{
@@ -113,6 +124,7 @@ public class CLI_Menu {
 				String lName = scan.nextLine();
 				Customers cust = new Customers(fName, lName);
 				custDao.addCustomer(cust);
+				System.out.println();
 				break;
 			}
 			case "updateProdPr": {
@@ -121,8 +133,8 @@ public class CLI_Menu {
 				System.out.println("Enter the new sale price: ");
 				double salePr = scan.nextDouble();
 				scan.nextLine();
-				scan.nextLine();
 				prodDao.updateProdSalePrice(prodId, salePr);
+				System.out.println();
 				break;
 			}
 			case "deleteProd": {
@@ -130,19 +142,24 @@ public class CLI_Menu {
 				int prodId = scan.nextInt();
 				scan.nextLine();
 				prodDao.deleteProduct(prodId);
+				log.warn("product id number " + prodId + " has been deleted");
+				System.out.println();
 				break;
 			}
 			case "gross": {
 				System.out.println(ordDao.showMoney());
+				System.out.println();
 				break;
 			}
 			case "exit": {
 				System.out.println("Have a nice day!");
+				System.out.println();
 				runMenu = false;
 				break;
 			}
 			default: {
 				System.out.println("That selction is not available...Please try again");
+				System.out.println();
 			}
 			} //end switch
 		}

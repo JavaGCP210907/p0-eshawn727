@@ -15,7 +15,7 @@ public class OrdersDao implements OrdersDaoInterface {
 
 	@Override
 	public List<Orders> getOrders() {
-		
+		// populate a list with the data base records
 		try(Connection db_link = ConnectionUtil.getConnection()){
 			
 			ResultSet rs = null;
@@ -47,7 +47,7 @@ public class OrdersDao implements OrdersDaoInterface {
 
 	@Override
 	public List<Orders> getOrderByNum(int num) {
-		// TODO Auto-generated method stub
+		// access an order by given id
 		try(Connection db_link = ConnectionUtil.getConnection()){
 			
 			ResultSet rs = null;
@@ -66,15 +66,16 @@ public class OrdersDao implements OrdersDaoInterface {
 			
 		} catch (SQLException e) {
 			System.out.println("Error...db connection/OrdersDao/getOrderByNum");
+			e.printStackTrace();
 		}
 		
 		return null;
 	}
 
 	@Override
-	public String showMoney() {
-		// TODO Auto-generated method stub
-		String sumAmount = null;
+	public double showMoney() {
+		// aggregate sql function to sum product sales in orders table
+		double sumAmount = 0;
 		try(Connection db_link = ConnectionUtil.getConnection()){
 			double sum = 0;
 			ResultSet rs = null;
@@ -87,15 +88,41 @@ public class OrdersDao implements OrdersDaoInterface {
 				sum = rs.getDouble("sum_alias");
 			}
 			
-			System.out.println("We made  profits!!" + sum);
-			sumAmount = "First quarter sales are at " + sum + " to date!";
+			sumAmount = sum;
 			
 		} catch (SQLException e) {
 			System.out.println("Error...db connection/OrdersDao/showMoney");
+			e.printStackTrace();
 		}
-		
-		
+				
 		return sumAmount;
 	}
 
-}
+	@Override
+	public double calcProfit() {
+		// aggregate sql function to sum product cost in orders table
+		double profit = 0;
+		
+		try(Connection db_link = ConnectionUtil.getConnection()){
+			double sum = 0;
+			ResultSet rs = null;
+			String sql = "select sum(prod_production_cost) as total_cost from products";
+			Statement s = db_link.createStatement();
+		
+			rs = s.executeQuery(sql);		
+			
+			while (rs.next()) {
+				sum = rs.getDouble("total_cost");
+			}
+			
+			profit = showMoney() - sum; // calculate gross profit
+			
+		} catch (SQLException e) {
+			System.out.println("Error...db connection/OrdersDao/showMoney");
+			e.printStackTrace();
+		}
+			
+		return profit;
+	}
+	
+} // end class
