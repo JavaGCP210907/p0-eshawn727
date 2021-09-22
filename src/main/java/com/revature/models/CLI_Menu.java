@@ -125,6 +125,7 @@ public class CLI_Menu {
 				Customers cust = new Customers(fName, lName);
 				custDao.addCustomer(cust);
 				System.out.println();
+				log.info(fName + lName + " added successfully");
 				break;
 			}
 			case "updateProdPr": {
@@ -134,6 +135,7 @@ public class CLI_Menu {
 				double salePr = scan.nextDouble();
 				scan.nextLine();
 				prodDao.updateProdSalePrice(prodId, salePr);
+				log.info(prodId + " sale price has been changed");
 				System.out.println();
 				break;
 			}

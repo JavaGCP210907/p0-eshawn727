@@ -39,6 +39,7 @@ public class GUI implements ActionListener {
 	JButton updateCustB; 
 	JButton addProdB; 
 	JButton deleteB;
+	JButton loginB;
 	
 	JTextField addTxt1;
 	JTextField addTxt2;
@@ -62,24 +63,26 @@ public class GUI implements ActionListener {
 	// build user interface
 	public void buildGUI() {
 		//Create base frame to hold all containers; set layout/size; add company logo
-		ImageIcon image = new ImageIcon("pegasus3.png");
+		//ImageIcon image = new ImageIcon("pegasus3.png");
+		ImageIcon image = new ImageIcon("revatureLogo.jpg");
 		baseFrame.setSize(800,675);
 		baseFrame.setLayout(new BorderLayout());	
 		baseFrame.setIconImage(image.getImage());
 		baseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
 		
 		// Sub panels using borderlayout
-		npanel.setPreferredSize(new Dimension(70,48));
+		npanel.setPreferredSize(new Dimension(70,45));
 		wpanel.setPreferredSize(new Dimension(100,100));
 		spanel.setPreferredSize(new Dimension(100,50));
-		cpanel.setPreferredSize(new Dimension(100,50));		
+		cpanel.setPreferredSize(new Dimension(100,50));	
+		epanel.setPreferredSize(new Dimension(80,50));
 		npanel.setBackground(Color.WHITE);
-
+		
 		// format center panel with additional layout to structure content
 		cpanel.setLayout(new BorderLayout(20,20));
 		// create panel to hold buttons; set size
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setPreferredSize(new Dimension(0,75));
+		buttonPanel.setPreferredSize(new Dimension(0,50));
 		
 		// add panels to base frame
 		cpanel.add(tblPanel,BorderLayout.CENTER);				
@@ -88,20 +91,19 @@ public class GUI implements ActionListener {
 		baseFrame.add(wpanel,BorderLayout.WEST);
 		baseFrame.add(cpanel,BorderLayout.CENTER);
 		cpanel.add(buttonPanel,BorderLayout.NORTH);
-		
-		// add created buttons with event handlers 
-		exitB = new JButton("EXIT");		
-		spanel.add(exitB);
-		exitB.addActionListener(this);
-		
+		baseFrame.add(epanel, BorderLayout.EAST);
+		// add created buttons with event handlers 	
+		exitB = new JButton("EXIT");	
+		loginB = new JButton("Login");
 		updateCustB = new JButton("Update Customer");
-		updateCustB.addActionListener(this);
-		
 		addProdB = new JButton("Add Product");
-		addProdB.addActionListener(this);
-		
 		deleteB = new JButton("Delete Product");
-		deleteB.addActionListener(this);
+	
+		spanel.add(loginB);
+		spanel.add(exitB);	
+		
+		exitB.addActionListener(this);
+		loginB.addActionListener(this);		
 		
 		FlowLayout bLayout = new FlowLayout(); // additional layout for buttons
 		bLayout.setHgap(20);
@@ -111,14 +113,14 @@ public class GUI implements ActionListener {
 		buttonPanel.add(deleteB);
 		
 		// create combobox for calculations
-		String[] options = {"Gross Sales", "Gross Profit"};
+		String[] options = {"Gross Sales", "Gross Profits"};
 		optionBox = new JComboBox(options);
-		optionBox.addActionListener((e) -> {optionBoxAction(e);});
 		buttonPanel.add(optionBox);
 				
 		// create company logo and welcome banner	
+		ImageIcon pegLogo = new ImageIcon("pegasus3.png");
 		npanel.setLayout(new BorderLayout(50,10));
-		JLabel logo = new JLabel(image);
+		JLabel logo = new JLabel(pegLogo);
 		JLabel greeting = new JLabel("Welcome to Pegasus Enterprises");
 		Font font1 = new Font("serif", Font.BOLD, 30);		
 		greeting.setFont(font1);				
@@ -127,8 +129,7 @@ public class GUI implements ActionListener {
 		
 		// create combobox for table selection
 		String[] tables = {"Customers", "Products", "Orders"};
-		tblComboBox = new JComboBox(tables);
-		tblComboBox.addActionListener( (e) -> {tblSelectAct(e);});		
+		tblComboBox = new JComboBox(tables);	
 		JLabel tblSelect = new JLabel("Select Table");
 		Font font2 = new Font("serif", Font.BOLD, 16);
 		tblSelect.setFont(font2);		
@@ -137,7 +138,7 @@ public class GUI implements ActionListener {
 		
 		// add java image to center panel for application launch
 		ImageIcon image2 = new ImageIcon("java.png");
-		JLabel logo2 = new JLabel(image2);
+		JLabel logo2 = new JLabel(image2);		
 		tblPanel.add(logo2);
 		// make application visible
 		baseFrame.setVisible(true);	
@@ -147,17 +148,32 @@ public class GUI implements ActionListener {
 	// event handler to build proper panel to get user input
 	@Override
 	public void actionPerformed(ActionEvent e) {		
-		//button logic builds a panel in center for user input
+		//button logic for exit and login	
 		if (e.getSource() == exitB){
 			baseFrame.setVisible(false);
 			guiLog.info("Application Closed By User");
-		} else if (e.getSource() == updateCustB) {
-			buildCustPanel();
-		} else if (e.getSource() == addProdB) {
-			buildProdPanel();		
-		} else if (e.getSource() == deleteB) {
-			buildDeletePanel();
-		}		
+		
+		} else if (e.getSource() == loginB) {
+			// Use option panes for login functionality 
+			JTextField username = new JTextField();
+			JTextField password = new JTextField();
+			Object[] loginFields = {"Username:", username, "Password", password};
+			
+			int login = JOptionPane.showConfirmDialog(null, loginFields, "Login", JOptionPane.OK_CANCEL_OPTION);
+			
+			// if login successful display table selection
+			if(login == JOptionPane.OK_OPTION) {
+				if(username.getText().equals("eshawn") && password.getText().equals("1234")) {
+					tblSelectAct(e); // show table as log in
+					grantAccess(); // grant access by adding listeners to each component
+					guiLog.info("login successful");
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Login Failed...Please Try Again");
+					guiLog.warn(username + "login failed");
+				}
+			}		
+		}
 	} // end actionPerformed
 	
 	// event handler for updating customer last name
@@ -237,7 +253,7 @@ public class GUI implements ActionListener {
 				JOptionPane.showMessageDialog(null, grossSales);
 				guiLog.info("Gross Sales Calculated from GUI");
 				
-			} else if(optionBox.getSelectedItem() == "Gross Profit") {
+			} else if(optionBox.getSelectedItem() == "Gross Profits") {
 				// access dao layer and use method to calculate gross profit from orders table
 				OrdersDao ordDao = new OrdersDao();
 				double profit = ordDao.calcProfit();
@@ -410,4 +426,25 @@ public class GUI implements ActionListener {
 		baseFrame.setVisible(true);
 	}
 
+	public void grantAccess() {
+		// if login successful add listeners to components 
+		updateCustB.addActionListener((e) -> {custBSelectAct(e);});
+		addProdB.addActionListener((e) -> {addProdBSelectAct(e);});
+		deleteB.addActionListener((e) -> {deleteProdSelectAct(e);});
+		tblComboBox.addActionListener( (e) -> {tblSelectAct(e);});	
+		optionBox.addActionListener((e) -> {optionBoxAction(e);});
+	}
+	
+	public void custBSelectAct (ActionEvent e) {
+		buildCustPanel();
+	}
+	
+	public void addProdBSelectAct (ActionEvent e) {
+		buildProdPanel();
+	}
+	
+	public void deleteProdSelectAct (ActionEvent e) {
+		buildDeletePanel();
+	}
+	
 } // class end
