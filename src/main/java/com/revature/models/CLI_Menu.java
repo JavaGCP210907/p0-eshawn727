@@ -77,6 +77,7 @@ public class CLI_Menu {
 				System.out.println();
 				break;
 			}
+			
 			case "products": {
 				prodList = prodDao.getProducts();
 				for(Products prod: prodList) {
@@ -86,6 +87,7 @@ public class CLI_Menu {
 				System.out.println();
 				break;
 			}
+			
 			case "orders": {
 				ordList = ordDao.getOrders();
 				for(Orders ord: ordList) {
@@ -95,6 +97,7 @@ public class CLI_Menu {
 				System.out.println();
 				break;
 			}
+			
 			case "custNum": {
 				System.out.println("Enter the customer number");
 				int id = scan.nextInt();	
@@ -106,6 +109,7 @@ public class CLI_Menu {
 				System.out.println();
 				break;
 			}
+			
 			case "findProd": {
 				System.out.println("Enter the Products Price");
 				double price = scan.nextDouble();
@@ -117,6 +121,7 @@ public class CLI_Menu {
 				System.out.println();
 				break;
 			}
+			
 			case "addCust":	{
 				System.out.println("Enter the cutomers first name: ");
 				String fName = scan.nextLine();
@@ -128,6 +133,7 @@ public class CLI_Menu {
 				log.info(fName + lName + " added successfully");
 				break;
 			}
+			
 			case "updateProdPr": {
 				System.out.println("Enter the product ID: ");
 				int prodId = scan.nextInt();
@@ -139,6 +145,7 @@ public class CLI_Menu {
 				System.out.println();
 				break;
 			}
+			
 			case "deleteProd": {
 				System.out.println("Enter the Product ID: ");
 				int prodId = scan.nextInt();
@@ -148,17 +155,20 @@ public class CLI_Menu {
 				System.out.println();
 				break;
 			}
+			
 			case "gross": {
 				System.out.println(ordDao.showMoney());
 				System.out.println();
 				break;
 			}
+			
 			case "exit": {
 				System.out.println("Have a nice day!");
 				System.out.println();
 				runMenu = false;
 				break;
 			}
+			
 			default: {
 				System.out.println("That selction is not available...Please try again");
 				System.out.println();

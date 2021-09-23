@@ -63,7 +63,6 @@ public class GUI implements ActionListener {
 	// build user interface
 	public void buildGUI() {
 		//Create base frame to hold all containers; set layout/size; add company logo
-		//ImageIcon image = new ImageIcon("pegasus3.png");
 		ImageIcon image = new ImageIcon("revatureLogo.jpg");
 		baseFrame.setSize(800,675);
 		baseFrame.setLayout(new BorderLayout());	
@@ -100,8 +99,7 @@ public class GUI implements ActionListener {
 		deleteB = new JButton("Delete Product");
 	
 		spanel.add(loginB);
-		spanel.add(exitB);	
-		
+		spanel.add(exitB);			
 		exitB.addActionListener(this);
 		loginB.addActionListener(this);		
 		
@@ -243,25 +241,23 @@ public class GUI implements ActionListener {
 	
 	// event handler for calculation options
 	public void optionBoxAction (ActionEvent e) {
-		//combobox logic 
-		if(e.getSource() == optionBox) {
-			if(optionBox.getSelectedItem() == "Gross Sales") {
-				// access dao layer and use method to calculate gross sales from orders table
-				OrdersDao ordDao = new OrdersDao();
-				double gross = ordDao.showMoney();
-				String grossSales = "First Quarter Sales are: $" + gross;
-				JOptionPane.showMessageDialog(null, grossSales);
-				guiLog.info("Gross Sales Calculated from GUI");
-				
-			} else if(optionBox.getSelectedItem() == "Gross Profits") {
-				// access dao layer and use method to calculate gross profit from orders table
-				OrdersDao ordDao = new OrdersDao();
-				double profit = ordDao.calcProfit();
-				String grossProfit = "Gross Profits are: $" + profit;
-				JOptionPane.showMessageDialog(null, grossProfit);
-				guiLog.info("Gross Profits Calculated from GUI");
-			} 
-		}		
+		//combobox logic 	
+		if(optionBox.getSelectedItem() == "Gross Sales") {
+			// access dao layer and use method to calculate gross sales from orders table
+			OrdersDao ordDao = new OrdersDao();
+			double gross = ordDao.showMoney();
+			String grossSales = "First Quarter Sales are: $" + gross;
+			JOptionPane.showMessageDialog(null, grossSales);
+			guiLog.info("Gross Sales Calculated from GUI");
+			
+		} else if(optionBox.getSelectedItem() == "Gross Profits") {
+			// access dao layer and use method to calculate gross profit from orders table
+			OrdersDao ordDao = new OrdersDao();
+			double profit = ordDao.calcProfit();
+			String grossProfit = "Gross Profits are: $" + profit;
+			JOptionPane.showMessageDialog(null, grossProfit);
+			guiLog.info("Gross Profits Calculated from GUI");
+		} 			
 	}
 	
 	// convert products arrayList to JTable
