@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -254,7 +255,9 @@ public class GUI implements ActionListener {
 			// access dao layer and use method to calculate gross profit from orders table
 			OrdersDao ordDao = new OrdersDao();
 			double profit = ordDao.calcProfit();
-			String grossProfit = "Gross Profits are: $" + profit;
+			Formatter doubleFormat = new Formatter();
+			doubleFormat.format("%.2f", profit);
+			String grossProfit = "Gross Profits are: $" + doubleFormat.toString();
 			JOptionPane.showMessageDialog(null, grossProfit);
 			guiLog.info("Gross Profits Calculated from GUI");
 		} 			
